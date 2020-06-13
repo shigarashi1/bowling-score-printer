@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "test": "jest -c ./jest.config.json --watchAll",
-    "test:ci": "jest -c ./jest.config.json"
+    "test:ci": "jest -c ./jest.config.json",
+    "gen:typedoc": "typedoc --options ./typedoc.json"
   },
   "repository": {
     "type": "git",
