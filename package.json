@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "test": "jest -c ./jest.config.json --watchAll",
-    "test:ci": "jest -c ./jest.config.json",
+    "test:ci": "jest -c ./jest.config.json --ci",
+    "test:pre-commit": "jest -c ./jest.config.json --ci --testPathIgnorePatterns=\"/test/\"",
     "docgen": "typedoc --options ./typedoc.json"
   },
   "repository": {
@@ -21,7 +22,7 @@
   "homepage": "https://github.com/shigarashi1/bowling-score-printer#readme",
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test:ci && tsc --noEmit && lint-staged"
+      "pre-commit": "npm run test:pre-commit && tsc --noEmit && lint-staged"
     }
   },
   "lint-staged": {
