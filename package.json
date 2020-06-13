@@ -20,6 +20,9 @@
     "url": "https://github.com/shigarashi1/bowling-score-printer/issues"
   },
   "homepage": "https://github.com/shigarashi1/bowling-score-printer#readme",
+  "engines": {
+    "node": "12.18.0"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "npm run test:pre-commit && tsc --noEmit && lint-staged"
