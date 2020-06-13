@@ -1,23 +1,77 @@
-# テスト項目
+# テスト項目と問題仕様について
+
+## テスト項目
 
 1. レーン合計を計算し出力する
 
-2. レーン内のユーザーをユーザーの合計の昇順で出力する
+2. レーン内のプレイヤーをプレイヤーの合計の昇順で出力する
 
-3. ユーザーごとのレーン合計と平均を出力する
+3. プレイヤーごとのレーン合計と平均を出力する
 
-4. ユーザーごとのゲームのストライク数、スペア数、ガター数を出力する
+4. プレイヤーごとのゲームのストライク数、スペア数、ガター数を出力する
 
-5. ユーザー名、ゲーム数、フレーム数、何投目かを指定して、倒したピンの数を出力する
+5. プレイヤー名、ゲーム数、フレーム数、何投目かを指定して、倒したピンの数を出力する
 
-6. ユーザーごとのスコアシートを作成し、出力する
+6. プレイヤーごとのスコアシートを作成し、出力する
 
 7. テストデータが不正なデータの場合、エラーを出力する
 
 
+## 入力データ仕様
+
+### データサンプル
+```
+10 2016-06-26 2 2
+kira 0 31 M
+L 30 31 M
+1 09:30
+2 10:00
+kira
+G 3 6 G 9 G 7 G 8 G 3 6 8 2 10 10 9 G
+G 3 6 G 9 G 7 G 8 G 3 6 8 2 10 10 9 G
+L
+G 3 6 G 9 G 7 G 8 G 3 6 8 2 10 10 9 G
+G 3 6 G 9 G 7 G 8 G 3 6 8 2 10 10 9 G
+```
+
+### 入力データ
+```
+LaneNo Date Player_N Game_N
+Player_1_Name Player_1_HDCP Player_1_Age Player_1_Sex
+Player_2_Name Player_2_HDCP Player_2_Age Player_2_Sex
+・・・
+Player_N_Name Player_N_HDCP Player_N_Age Player_N_Sex
+Game_1 Game_1_StartTime
+Game_2 Game_2_StartTime
+・・・
+Game_N Game_N_StartTime
+Player_1_Name
+Player_1_Game_1_Throw_1 Player_1_Game_1_Throw_2 Player_1_Game_1_Throw_3 ・・・ Player_1_Game_1_Throw_N
+・・・
+Player_1_Game_N_Throw_1 Player_1_Game_N_Throw_2 Player_1_Game_N_Throw_3 ・・・ Player_1_Game_N_Throw_N
+・・・
+Player_2_Name
+Player_2_Game_1_Throw_1 Player_2_Game_1_Throw_2 Player_2_Game_1_Throw_3 ・・・ Player_1_Game_1_Throw_N
+・・・
+Player_2_Game_N_Throw_1 Player_2_Game_N_Throw_2 Player_2_Game_N_Throw_3 ・・・ Player_2_Game_N_Throw_N
+・・・
+Player_N_Name
+Player_N_Game_1_Throw_1 Player_N_Game_1_Throw_2 Player_N_Game_1_Throw_3 ・・・ Player_N_Game_1_Throw_N
+・・・
+Player_N_Game_N_Throw_1 Player_N_Game_N_Throw_2 Player_N_Game_N_Throw_3 ・・・ Player_N_Game_N_Throw_N
+```
+
+### 仕様詳細
+- 1行目に遊んだレーン数（LaneNo）、日付（Date）、プレイヤー数（Player_N）、ゲーム数（Game_N）の順で半角スペース区切りで渡される
+- 2〜Player_N行目まで、プレイヤー名（Player_N_Name）、HDCP（Player_N_HDCP）、年齢（Player_N_Age）、性別（Player_N_Sex）の順で半角スペース区切りで渡される
+- Player_N〜Game_N行目まで、ゲーム数（Game_N）、開始時間（Game_N_StartTime）の順で半角スペース区切りで渡される
+- Game_N行目以降はプレイヤー名（Player_N_Name）の次行からプレイヤーのゲームの投球結果がゲーム数昇順で行区切りで渡される
+- プレイヤーの投球結果の行は1投目から順にN投目まで順に半角スペース区切りで渡される
+
+
 ## スコアシートの仕様
 
-### スコアシートサンプル（最初の表がサマリーを表示する表）
+### スコアシートサンプル
 ```
 | Date            | Lane | Name   | Age | Sex             | HDCP | Total | AVG | X       | /        |
 |-----------------|------|--------|-----|-----------------|------|-------|-----|---------|----------|
@@ -43,10 +97,10 @@
 - "サマリーを表示する表"
   - "Date"は"yyyy/MM/dd eee"のフォーマットで出力する
   - "Lane"は遊んだレーン数を出力する
-  - "Name"は出力対象となったユーザー名を出力する
-  - "Age"はユーザーの年齢を出力する
+  - "Name"は出力対象となったプレイヤー名を出力する
+  - "Age"はプレイヤーの年齢を出力する
   - "Sex"は男性ならmale、女性ならfemaleのフォーマットで出力する
-  - "HDCP"はユーザーのハンディキャップを出力する
+  - "HDCP"はプレイヤーのハンディキャップを出力する
   - "Total"は全ゲームの合計スコアを出力する
   - "AVG"は1ゲームの平均スコアを出力する
   - "X"、"/"は全ゲームのストライク及びスペアの合計と全ゲームの投球数で割った平均を出力する
