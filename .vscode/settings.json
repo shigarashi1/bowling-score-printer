@@ -1,0 +1,20 @@
+{
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "eslint.workingDirectories": ["../src"],
+  "eslint.packageManager": "npm",
+  "eslint.nodePath": "node_modules/eslint/lib",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "[json]": {
+    "editor.formatOnSave": true
+  },
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "plantuml.render": "PlantUMLServer",
+  "plantuml.server": "https://www.plantuml.com/plantuml/",
+  "eslint.alwaysShowStatus": true
+}

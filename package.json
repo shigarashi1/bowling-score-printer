@@ -1,0 +1,45 @@
+{
+  "name": "bowling-score-printer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "jest -c ./jest.config.json --watchAll",
+    "test:ci": "jest -c ./jest.config.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shigarashi1/bowling-score-printer.git"
+  },
+  "author": "sigarashi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shigarashi1/bowling-score-printer/issues"
+  },
+  "homepage": "https://github.com/shigarashi1/bowling-score-printer#readme",
+  "dependencies": {
+    "date-fns": "2.14.0",
+    "fp-ts": "2.6.2",
+    "ramda": "0.27.0"
+  },
+  "devDependencies": {
+    "@types/jest": "25.2.3",
+    "@types/node": "14.0.11",
+    "@types/ramda": "0.27.6",
+    "@typescript-eslint/eslint-plugin": "3.1.0",
+    "@typescript-eslint/parser": "3.1.0",
+    "eslint": "7.2.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-import-resolver-typescript": "2.0.0",
+    "eslint-plugin-prettier": "3.1.3",
+    "husky": "4.2.5",
+    "jest": "26.0.1",
+    "lint-staged": "10.2.9",
+    "prettier": "2.0.5",
+    "ts-jest": "26.1.0",
+    "ts-node": "8.10.2",
+    "typedoc": "0.17.7",
+    "typescript": "3.9.5"
+  }
+}
