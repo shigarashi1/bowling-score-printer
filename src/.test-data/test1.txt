@@ -1,8 +1,8 @@
 15 2016-06-26 4 3
 akira 0 31 M
-iori 50 8 M
-usako 20 28 W
-erika 10 18 W
+iori 60 8 M
+usako 30 28 W
+erika 15 18 W
 1 09:30
 2 10:45
 3 12:00
