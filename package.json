@@ -18,6 +18,17 @@
     "url": "https://github.com/shigarashi1/bowling-score-printer/issues"
   },
   "homepage": "https://github.com/shigarashi1/bowling-score-printer#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test:ci && tsc --noEmit && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "dependencies": {
     "date-fns": "2.14.0",
     "fp-ts": "2.6.2",
