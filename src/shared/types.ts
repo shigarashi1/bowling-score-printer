@@ -92,7 +92,7 @@ export type TGame = {
   /** ゲーム数 */
   no: number;
   /** 各フレームの結果 */
-  flames: TFrame[];
+  frames: TFrame[];
   /** ゲームの開始時間 */
   startAt: Date;
 };
