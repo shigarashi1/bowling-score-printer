@@ -1,2 +1,3 @@
 export * from './logger';
-export * from './text-reader';
+export * from './textReader';
+export * from './math';
