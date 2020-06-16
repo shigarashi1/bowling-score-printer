@@ -8,4 +8,4 @@ const toString = (v: unknown) => String(v);
  * @param path テキストファイルのパス（絶対パス）
  * @param encode エンコード
  */
-export const readTextFileLines = pipe(readFileSync, toString, split('\n'));
+export const readTextFile = pipe(readFileSync, toString, split('\n'));
