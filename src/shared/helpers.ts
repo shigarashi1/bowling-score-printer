@@ -1,4 +1,4 @@
-import { __, allPass, pipe, multiply, divide, map, prop, reduce, add } from 'ramda';
+import { allPass, pipe, map, prop, reduce, add } from 'ramda';
 import { TThrowResult, TKnockedDownPin, TFrame } from '.';
 import { TFrameNumber, TPlayer } from './types';
 
@@ -32,13 +32,6 @@ export const isSpare = (firstThrowResult: TThrowResult, secondThrowResult: TThro
  * @param frameNo フレームno
  */
 export const isLastFrame = (frameNo: TFrameNumber): boolean => frameNo === 10;
-
-/**
- * 桁数を指定し、切り捨てを行う
- * @param digits 桁数を指定（1の位の場合:1、小数点第1位の場合:-1を指定）
- */
-export const mathFloor = (digits: number): ((n: number) => number) =>
-  pipe(multiply(Math.pow(10, digits)), Math.floor, divide(__, Math.pow(10, digits)));
 
 /**
  * 各フレームのスコアの配列を計算して返却する
