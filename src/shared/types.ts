@@ -75,14 +75,17 @@ export type TFrame = {
   box1st: TBox1st;
   /** 2投目の投球結果 */
   box2nd: TBox2nd;
+};
+
+export type TLastFrame = TFrame & {
   /** 3投目の投球結果 */
-  box3rd?: TBox3rd;
+  box3rd: TBox3rd;
 };
 
 /**
- * フレームのtype + スコア
+ * スコアのプロパティを追加する
  */
-export type TExtendFrame = TFrame & {
+export type ExtendScore<T> = T & {
   score: number;
 };
 
@@ -93,7 +96,7 @@ export type TGame = {
   /** ゲーム数 */
   no: number;
   /** 各フレームの結果 */
-  frames: TFrame[];
+  frames: (TFrame | TLastFrame)[];
   /** ゲームの開始時間 */
   startAt: Date;
 };
