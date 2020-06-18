@@ -182,7 +182,7 @@ export const calcFrameScoreElements: (frames: (TFrame | TLastFrame)[]) => Extend
  * ゲームのスコアを計算して返却する
  */
 export const calcGameScore: (game: TGame) => number = pipe(
-  map(prop('frames')),
+  prop('frames'),
   calcFrameScoreElements,
   map(prop('score')),
   reduce(add, 0),
