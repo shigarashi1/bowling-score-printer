@@ -52,7 +52,6 @@ const countPinNext1ThrowResult = (frames: TFrame[], frameNumber: TFrameNumber): 
  * @param frames フレーム
  * @param frameNumber 指定したフレームno
  */
-// eslint-disable-next-line complexity
 const countPinNext2ThrowResult = (frames: TFrame[], frameNumber: TFrameNumber): number => {
   const nextFrame = find(pipe(propEq('no', inc(frameNumber))), frames);
   if (!nextFrame) {
@@ -66,13 +65,8 @@ const countPinNext2ThrowResult = (frames: TFrame[], frameNumber: TFrameNumber): 
   if (isLastFrame(nextFrame)) {
     return 10 + countPinThrowResult(nextFrame.throwResult2nd);
   }
-  // さらに次のフレームを取得する
-  const nextNextFrame = find(pipe(propEq('no', inc(nextFrame.no))), frames);
-  // 次のフレームがない場合、1投目のみで終了
-  if (!nextNextFrame) {
-    return 10;
-  }
-  return 10 + countPin2ThrowResult(nextNextFrame.throwResult1st, nextNextFrame.throwResult2nd);
+  // 次のフレームの1投目から取得した値を加算する
+  return 10 + countPinNext1ThrowResult(frames, prop('no', nextFrame));
 };
 
 /**
