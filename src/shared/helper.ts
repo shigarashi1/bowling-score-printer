@@ -48,12 +48,11 @@ const countPinNext1ThrowResult = (frames: TFrame[], frameNumber: TFrameNumber): 
 
 /**
  * 指定したフレーム以降から2投目までの倒したピンの数を返却する
- * NOTICE: 次以降のフレームがある前提である
- * @param frames フレーム
+ * @param nextFrames 計算対象より後のフレーム
  * @param frameNumber 指定したフレームno
  */
-const countPinNext2ThrowResult = (frames: TFrame[], frameNumber: TFrameNumber): number => {
-  const nextFrame = find(pipe(propEq('no', inc(frameNumber))), frames);
+const countPinNext2ThrowResult = (nextFrames: TFrame[], frameNumber: TFrameNumber): number => {
+  const nextFrame = find(pipe(propEq('no', inc(frameNumber))), nextFrames);
   if (!nextFrame) {
     return 0;
   }
@@ -66,7 +65,7 @@ const countPinNext2ThrowResult = (frames: TFrame[], frameNumber: TFrameNumber): 
     return 10 + countPinThrowResult(nextFrame.throwResult2nd);
   }
   // 次のフレームの1投目から取得した値を加算する
-  return 10 + countPinNext1ThrowResult(frames, prop('no', nextFrame));
+  return 10 + countPinNext1ThrowResult(nextFrames, prop('no', nextFrame));
 };
 
 /**
@@ -98,7 +97,7 @@ const calcBasicFrameScore = (nextFrames: TFrame[], frame: TBasicFrame): ExtendSc
 
 /**
  * 最終フレームのスコアを計算したTypeを返却する
- * @param lastFrame
+ * @param lastFrame 最終フレーム
  */
 const calcLastFrameScore = (lastFrame: TLastFrame): ExtendScore<TLastFrame> => {
   // FIXME: 未実装 ・・・
