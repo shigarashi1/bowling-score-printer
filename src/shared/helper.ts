@@ -64,7 +64,7 @@ const countPinNext2ThrowResult = (frames: TFrame[], frameNumber: TFrameNumber): 
   }
   // 最終フレームの場合、2投目を加算して返却
   if (isLastFrame(nextFrame)) {
-    return 10 + countPin2ThrowResult(nextFrame.throwResult2nd, nextFrame.throwResult3rd);
+    return 10 + countPinThrowResult(nextFrame.throwResult2nd);
   }
   // さらに次のフレームを取得する
   const nextNextFrame = find(pipe(propEq('no', inc(nextFrame.no))), frames);
