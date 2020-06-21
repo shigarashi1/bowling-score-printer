@@ -1,5 +1,5 @@
 import { allPass, path, includes } from 'ramda';
-import { TKnockedDownPin, TLastFrame, TThrowResult, EScoreMark, TFrame } from './type';
+import { TKnockedDownPin, TLastFrame, TThrowResult, EScoreMark, TFrame, ESexInput, TSexInput } from './type';
 
 /**
  * number型か?
@@ -28,3 +28,9 @@ export const isZeroKnockedDownPin = (
  */
 export const isLastFrame = (x: TFrame): x is TLastFrame =>
   path(['no'], x) === 10 && typeof path(['box3rd'], x) !== 'undefined';
+
+/**
+ * 性別の入力値か？
+ * @param x 型検定したい値
+ */
+export const isSexInputType = (x: unknown): x is TSexInput => includes(x, [ESexInput.female, ESexInput.male]);

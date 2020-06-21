@@ -22,6 +22,7 @@ const isPlayerNameLines = (playerNames: string[]) => (value?: string) => include
  * 読み込んだデータをparseする
  * @param rows 読み込んだファイルの行
  */
+// MEMO: ReturnTypeで型を取得したいので、eslintを切る
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const parseFileLines = (fileLines: string[]) => {
   const lines = map(split(' '), fileLines);
@@ -42,10 +43,10 @@ export const parseFileLines = (fileLines: string[]) => {
   )(lines);
 
   // ゲームの開始時間の配列を作る
-  const games = pipe(
+  const gameStartTimes = pipe(
     filterIndexed<string[]>(isGameStartAtLines(numberOfPlayer, numberOfGame)),
     map((line) => ({
-      gameNo: getOrElse('', nth(0, line)),
+      no: getOrElse('', nth(0, line)),
       startAt: getOrElse('', nth(1, line)),
     })),
   )(lines);
@@ -82,9 +83,9 @@ export const parseFileLines = (fileLines: string[]) => {
     playDate,
     numberOfPlayer,
     numberOfGame,
-    games,
+    gameStartTimes,
     playerResults,
   };
 };
 
-export type ParsedFileLines = ReturnType<typeof parseFileLines>;
+export type ParsedData = ReturnType<typeof parseFileLines>;
