@@ -3,3 +3,5 @@ export * from './textReader';
 export * from './math';
 export * from './getOrElse';
 export * from './filterIndexed';
+export * from './enum2enum';
+export * from './typeGuard';
