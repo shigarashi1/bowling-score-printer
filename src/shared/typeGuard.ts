@@ -1,4 +1,4 @@
-import { allPass, path, includes } from 'ramda';
+import { allPass, path, includes, hasPath } from 'ramda';
 import { TKnockedDownPin, TLastFrame, TThrowResult, EScoreMark, TFrame, ESexInput, TSexInput } from './type';
 
 /**
@@ -26,8 +26,7 @@ export const isZeroKnockedDownPin = (
  * 最終フレームの型か？
  * @param x 型検定したい値
  */
-export const isLastFrame = (x: TFrame): x is TLastFrame =>
-  path(['no'], x) === 10 && typeof path(['box3rd'], x) !== 'undefined';
+export const isLastFrame = (x: TFrame): x is TLastFrame => path(['no'], x) === 10 && hasPath(['throwResult3rd'], x);
 
 /**
  * 性別の入力値か？
