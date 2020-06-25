@@ -1,26 +1,4 @@
 /**
- * ガターのenum値
- */
-export const EGutter = {
-  first: 'G',
-  miss: '-',
-} as const;
-export type TGutter = typeof EGutter[keyof typeof EGutter];
-
-export type TFoul = 'F';
-/** 倒したピンの数 */
-export type TKnockedDownPin = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
-
-/** 投球結果 */
-export type TThrowResult = TGutter | TFoul | TKnockedDownPin;
-/** 1投球目の投球結果 */
-export type TThrowResultExcludeGutter1st = Exclude<TThrowResult, typeof EGutter.miss>;
-/** 2投球目の投球結果 */
-export type TThrowResultExcludeGutter2nd = Exclude<TThrowResult, typeof EGutter.first>;
-/** 3投球目の投球結果 */
-export type TThrowResultExcludeGutter3nd = TThrowResultExcludeGutter2nd;
-
-/**
  * 性別のEnum値
  */
 export const ESex = {
@@ -37,7 +15,7 @@ export type TSex = typeof ESex[keyof typeof ESex];
 /**
  * 性別のEnum値（Input用）
  */
-export const ESexInputType = {
+export const ESexInput = {
   /** 男 */
   [ESex.male]: 'M',
   /** 女 */
@@ -46,12 +24,12 @@ export const ESexInputType = {
 /**
  * 性別のtype（Input用）
  */
-export type TSexForImput = typeof ESexInputType[keyof typeof ESex];
+export type TSexInput = typeof ESexInput[keyof typeof ESex];
 
 /**
  * スコアシート用のEnum値
  */
-export const EScoreSymble = {
+export const EScoreMark = {
   /** ストライク */
   strike: 'X',
   /** スペア */
@@ -59,12 +37,32 @@ export const EScoreSymble = {
   /** ファール */
   foul: 'F',
   /** ガター（1投目） */
-  gutter: EGutter.first,
-  /** ガター（1投目以外） */
-  miss: EGutter.miss,
-  /** 投球なし（3投目） */
+  gutter: 'G',
+  /** ガター（2、3投目） */
+  miss: '-',
+  /** 投球なし（2、3投目） */
   noThrow: ' ',
 } as const;
+export type TScoreMark = typeof EScoreMark[keyof typeof EScoreMark];
+
+/** 倒したピンの数 */
+export type TKnockedDownPin = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+
+/** 投球結果 */
+export type TThrowResult =
+  | TKnockedDownPin
+  | typeof EScoreMark.gutter
+  | typeof EScoreMark.foul
+  | typeof EScoreMark.noThrow;
+
+/** 1投目の結果 */
+export type TThrowResult1st = Exclude<TThrowResult, typeof EScoreMark.noThrow>;
+
+/** 2投目の結果 */
+export type TThrowResult2nd = TThrowResult;
+
+/** 3投目の結果 */
+export type TThrowResult3rd = TThrowResult2nd;
 
 /**
  * フレーム数（1~10）
@@ -72,17 +70,32 @@ export const EScoreSymble = {
 export type TFrameNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
 /**
- * フレームのtype
+ * 1~9フレーム
  */
-export type TFrame = {
+export type TBasicFrame = {
   /** フレーム数 */
   no: TFrameNumber;
   /** 1投目の投球結果 */
-  firstThrowResult: TThrowResultExcludeGutter1st;
+  throwResult1st: TThrowResult1st;
   /** 2投目の投球結果 */
-  secondThrowResult: TThrowResultExcludeGutter2nd;
+  throwResult2nd: TThrowResult2nd;
+};
+
+/**
+ * 最終フレーム
+ */
+export type TLastFrame = TBasicFrame & {
   /** 3投目の投球結果 */
-  thirdThrowResult?: TThrowResultExcludeGutter2nd;
+  throwResult3rd: TThrowResult3rd;
+};
+
+export type TFrame = TBasicFrame | TLastFrame;
+
+/**
+ * スコアのプロパティを追加する
+ */
+export type ExtendScore<T> = T & {
+  score: number;
 };
 
 /**
@@ -92,7 +105,7 @@ export type TGame = {
   /** ゲーム数 */
   no: number;
   /** 各フレームの結果 */
-  flames: TFrame[];
+  frames: TFrame[];
   /** ゲームの開始時間 */
   startAt: Date;
 };
@@ -121,6 +134,6 @@ export type TLane = {
   no: number;
   /** 遊んだ日付 */
   date: Date;
-  /** 遊んだプレイヤー一覧 */
+  /** 遊んだプレイヤー */
   players: TPlayer[];
 };

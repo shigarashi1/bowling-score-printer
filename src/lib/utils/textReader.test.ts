@@ -1,8 +1,8 @@
-import { readTextFileLines } from './text-reader';
+import { readTextFile } from './textReader';
 
 describe('readTextFileLines', () => {
   it('行を文字列の配列として返却', () => {
-    const lines = readTextFileLines('src/lib/utils/text-reader-test.txt', 'utf8');
+    const lines = readTextFile('src/lib/utils/textReader.test.txt', 'utf8');
     lines.forEach((line) => {
       expect(typeof line === 'string').toBeTruthy();
     });
