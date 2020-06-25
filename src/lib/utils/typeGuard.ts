@@ -1,4 +1,4 @@
-import { IndexesObject } from './types';
+import { IndexesObject } from './type';
 import { toPairs, propEq } from 'ramda';
 
 /**

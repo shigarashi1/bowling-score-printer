@@ -1,7 +1,7 @@
-import { IndexesObject } from './types';
 import { toPairs, find, pathEq } from 'ramda';
+import { IndexesObject } from './type';
 import { getOrElse } from './getOrElse';
-import { isEnum } from './typeGuards';
+import { isEnum } from './typeGuard';
 
 /**
  * EnumからEnumへの変換を行う
