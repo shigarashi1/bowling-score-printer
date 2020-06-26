@@ -1,6 +1,6 @@
-# テスト項目とデータの入出力仕様について
+# データの入出力仕様について
 
-## テスト項目
+## 期待する項目
 
 1. レーン合計を計算し出力する
   - ただし、レーンの合計にはHDCPを加味しないこと
@@ -26,12 +26,10 @@
 10 2016-06-26 2 2
 kira 0 31 M
 L 30 31 M
-1 09:30
-2 10:00
-kira
+09:30
+10:00
 G 3 6 G 9 G 7 G 8 G 3 6 8 2 10 10 9 G
 G 3 6 G 9 G 7 G 8 G 3 6 8 2 10 10 9 G
-L
 G 3 6 G 9 G 7 G 8 G 3 6 8 2 10 10 9 G
 G 3 6 G 9 G 7 G 8 G 3 6 8 2 10 10 9 G
 ```
@@ -43,21 +41,18 @@ Player_1_Name Player_1_HDCP Player_1_Age Player_1_Sex
 Player_2_Name Player_2_HDCP Player_2_Age Player_2_Sex
 ・・・
 Player_N_Name Player_N_HDCP Player_N_Age Player_N_Sex
-Game_1 Game_1_StartTime
-Game_2 Game_2_StartTime
+Game_1_StartTime
+Game_2_StartTime
 ・・・
-Game_N Game_N_StartTime
-Player_1_Name
+Game_N_StartTime
 Player_1_Game_1_Throw_1 Player_1_Game_1_Throw_2 Player_1_Game_1_Throw_3 ・・・ Player_1_Game_1_Throw_N
 ・・・
 Player_1_Game_N_Throw_1 Player_1_Game_N_Throw_2 Player_1_Game_N_Throw_3 ・・・ Player_1_Game_N_Throw_N
 ・・・
-Player_2_Name
 Player_2_Game_1_Throw_1 Player_2_Game_1_Throw_2 Player_2_Game_1_Throw_3 ・・・ Player_1_Game_1_Throw_N
 ・・・
 Player_2_Game_N_Throw_1 Player_2_Game_N_Throw_2 Player_2_Game_N_Throw_3 ・・・ Player_2_Game_N_Throw_N
 ・・・
-Player_N_Name
 Player_N_Game_1_Throw_1 Player_N_Game_1_Throw_2 Player_N_Game_1_Throw_3 ・・・ Player_N_Game_1_Throw_N
 ・・・
 Player_N_Game_N_Throw_1 Player_N_Game_N_Throw_2 Player_N_Game_N_Throw_3 ・・・ Player_N_Game_N_Throw_N
@@ -66,8 +61,8 @@ Player_N_Game_N_Throw_1 Player_N_Game_N_Throw_2 Player_N_Game_N_Throw_3 ・・�
 ### 入力データ仕様詳細
 - 1行目に遊んだレーン数（LaneNo）、日付（Date）、プレイヤー数（Player_N）、ゲーム数（Game_N）の順で半角スペース区切りで与えられる
 - 2〜Player_N行目まで、プレイヤー名（Player_N_Name）、HDCP（Player_N_HDCP）、年齢（Player_N_Age）、性別（Player_N_Sex）の順で半角スペース区切りで与えられる
-- Player_N〜Game_N行目まで、ゲーム数（Game_N）、開始時間（Game_N_StartTime）の順で半角スペース区切りで与えられる
-- Game_N行目以降はプレイヤー名（Player_N_Name）の次行からプレイヤーのゲームの投球結果がゲーム数の昇順で行区切りで与えられる
+- Player_N〜Game_N行目まで、開始時間（Game_N_StartTime）の順で半角スペース区切りで与えられる
+- Game_N行目以降はプレイヤーのゲームの投球結果がゲーム数の昇順で行区切りで与えられる
 - プレイヤーの投球結果の行は1投目から順にN投目まで順に半角スペース区切りで与えられる
 - フォーマットは次の通り
   - 日付（Date）は"yyyy-MM-dd"で与えられる
