@@ -16,12 +16,15 @@ const NORMARIZE_CONFIG: NormarizeConfig<NormarizedData> = {
   numberOfPlayer: [0, 2],
   numberOfGame: [0, 3],
   playerInformations: { start: 1, end: [0, 2] },
-  gameStartAtTimes: { start: [0, 2], end: [0, 3] },
-  playerResults: {
-    start: [
+  gameStartAtTimes: {
+    start: [1, [0, 2]],
+    end: [
       [0, 2],
       [0, 3],
     ],
+  },
+  playerResults: {
+    start: [1, [0, 2], [0, 3]],
   },
 };
 

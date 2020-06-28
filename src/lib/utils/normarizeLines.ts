@@ -2,7 +2,7 @@ import { isNumber, isNumberStr } from '../utils';
 import { add, path, toPairs, map, reduce, split, all, pipe, prop, filter } from 'ramda';
 
 type CellIndex = [number, number];
-type ItereterTypeValue = number | CellIndex | CellIndex[];
+type ItereterTypeValue = number | CellIndex | (number | CellIndex)[];
 type ItereterType = {
   start: ItereterTypeValue;
   end?: ItereterTypeValue;
@@ -37,7 +37,7 @@ const getIndexNumber = (separatedLines: string[][], conf: ItereterTypeValue): nu
   if (isCellIndex(conf)) {
     return fn(conf);
   }
-  return reduce((acc, cur) => add(acc, fn(cur)), 0, conf);
+  return reduce((acc, cur) => add(acc, typeof cur === 'number' ? cur : fn(cur)), 0, conf);
 };
 
 const takeCondition = (startIndex: number, endIndex?: number) => (index: number): boolean => {
