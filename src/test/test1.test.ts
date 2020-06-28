@@ -1,6 +1,10 @@
-// import { readTextFileLines } from '../lib/utils';
-// const lines = readTextFileLines('src/test/test1.txt', 'utf8');
 import { split, pipe, join } from 'ramda';
+// //
+// import { readTextFile } from '../lib/utils';
+// import { normarize } from '../shared/normarize';
+
+// const LINES = readTextFile('src/test/test1.txt', 'utf8');
+// const NORMARIZED_DATA = normarize(LINES);
 
 const TEST_CASE_NAME = 'テストケース1';
 describe(`${TEST_CASE_NAME} 1.レーン合計を計算し出力する`, () => {
