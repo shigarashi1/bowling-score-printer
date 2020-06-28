@@ -1,11 +1,6 @@
 import { allPass, path, includes, hasPath } from 'ramda';
 import { TKnockedDownPin, TLastFrame, TThrowResult, EScoreMark, TFrame, ESexInput, TSexInput } from './type';
-
-/**
- * number型か?
- * @param x 型検定したい値
- */
-export const isNumber = (x: unknown): x is number => !Number.isNaN(x);
+import { isNumber } from '../lib/utils';
 
 /**
  * 倒したピンの数の型か？
