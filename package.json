@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "test": "jest -c ./jest.config.json --watchAll",
+    "test": "npm run test:case",
+    "test:all": "jest -c ./jest.config.json --watchAll",
     "test:shared": "jest -c ./jest.config.json --watchAll --testPathIgnorePatterns=\"/test/\"",
     "test:case": "jest -c ./jest.config.json --watchAll --rootDir=\"src/test\"",
     "test:ci": "jest -c ./jest.config.json --ci",
     "test:pre-commit": "jest -c ./jest.config.json --ci --testPathIgnorePatterns=\"/test/\"",
+    "test:clearCache": "jest --clearCache",
     "docgen": "typedoc --options ./typedoc.json"
   },
   "repository": {
