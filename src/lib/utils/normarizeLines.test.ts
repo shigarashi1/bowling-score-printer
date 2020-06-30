@@ -1,5 +1,5 @@
 import { normarizeLines, NormarizeConfig } from './normarizeLines';
-import { times, inc, map, add, repeat, join, prop, toPairs } from 'ramda';
+import { times, inc, map, add, repeat, join, prop, reduce, path, keys } from 'ramda';
 
 /**
  * 渡した数字に+1づつ加算した4つの数字の配列を返却する
@@ -18,9 +18,20 @@ const TEST_LINES = repeat(inc, 10)
   .map((_v, i) => number4Array(i))
   .map(join(' '));
 
-type TestProps = 'cellIndex1' | 'cellIndex2' | 'itereter1' | 'itereter2' | 'itereter3' | 'itereter4';
-
-const TEST_NORMARIZED_CONFIG: NormarizeConfig<Record<TestProps, unknown>> = {
+type TestType = {
+  cellIndex1: unknown;
+  cellIndex2: unknown;
+  itereter1: unknown;
+  itereter2: unknown;
+  itereter3: unknown;
+  itereter4: {
+    a: unknown;
+    b: unknown;
+    c: unknown;
+    d: unknown;
+  };
+};
+const TEST_NORMARIZED_CONFIG: NormarizeConfig<TestType> = {
   cellIndex1: [0, 0],
   cellIndex2: [0, 1],
   itereter1: { start: 0, end: 1 },
@@ -42,10 +53,31 @@ const TEST_NORMARIZED_CONFIG: NormarizeConfig<Record<TestProps, unknown>> = {
     start: [
       [3, 3], // 7
     ],
+    convert: {
+      a: 0,
+      b: 1,
+      c: 2,
+      d: 3,
+    },
   },
 };
 
-const TEST_EXPECTS: Record<TestProps, string | string[][]> = {
+const toItereter4 = (values: string[][]) =>
+  reduce(
+    (acc, cur) => [
+      ...acc,
+      {
+        a: path([0], cur),
+        b: path([1], cur),
+        c: path([2], cur),
+        d: path([3], cur),
+      },
+    ],
+    [] as TestType['itereter4'][],
+    values,
+  );
+
+const TEST_EXPECTS: Record<keyof TestType, unknown> = {
   cellIndex1: '1',
   cellIndex2: '2',
   itereter1: [
@@ -62,21 +94,19 @@ const TEST_EXPECTS: Record<TestProps, string | string[][]> = {
     ['6', '7', '8', '9'],
     ['7', '8', '9', '10'],
   ],
-  itereter4: [
+  itereter4: toItereter4([
     ['8', '9', '10', '11'],
     ['9', '10', '11', '12'],
     ['10', '11', '12', '13'],
-  ],
+  ]),
 };
 
 describe('normarizeLines', () => {
   const normarize = normarizeLines(TEST_NORMARIZED_CONFIG, ' ');
   const actuals = normarize(TEST_LINES);
   it('all props equal', () => {
-    toPairs(TEST_EXPECTS)
-      .map(([key]) => key as TestProps)
-      .forEach((key) => {
-        expect(prop(key, TEST_EXPECTS)).toEqual(prop(key, actuals));
-      });
+    keys(TEST_EXPECTS).forEach((key) => {
+      expect(prop(key, TEST_EXPECTS)).toEqual(prop(key, actuals));
+    });
   });
 });
