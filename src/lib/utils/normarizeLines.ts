@@ -8,7 +8,9 @@ type Indexes = [number, number];
 /**
  * 複数行取得する、かつ、特定の列をkeyとして指定したい場合、{key: 列番}で指定
  */
-type ItereterTypeConverterConfig<T, P extends keyof T> = { [K in keyof T[P]]: number };
+type ItereterTypeConverterConfig<T, P extends keyof T> = T[P] extends Array<infer R>
+  ? { [K in keyof T[P][0]]: number }
+  : { [K in keyof T[P]]: number };
 /**
  * 繰り返し行を取得したい場合に指定
  * 特定の行数と列数を指定することや複数指定することで加算した行間を取得できる

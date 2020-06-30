@@ -29,7 +29,7 @@ type TestType = {
     b: unknown;
     c: unknown;
     d: unknown;
-  };
+  }[];
 };
 const TEST_NORMARIZED_CONFIG: NormarizeConfig<TestType> = {
   cellIndex1: [0, 0],
@@ -73,7 +73,7 @@ const toItereter4 = (values: string[][]) =>
         d: path([3], cur),
       },
     ],
-    [] as TestType['itereter4'][],
+    [] as TestType['itereter4'],
     values,
   );
 
