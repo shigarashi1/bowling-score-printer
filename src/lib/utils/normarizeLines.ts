@@ -1,22 +1,36 @@
 import { isNumber, isNumberStr } from '../utils';
-import { add, path, toPairs, map, reduce, split, all, pipe, prop, filter } from 'ramda';
+import { add, path, map, reduce, split, all, pipe, prop, filter, keys, toPairs, assoc } from 'ramda';
 
-type CellIndex = [number, number];
-type ItereterTypeValue = number | CellIndex | (number | CellIndex)[];
-type ItereterType = {
+/**
+ * 行数と列数を指定して、特定の値を取得
+ */
+type Indexes = [number, number];
+/**
+ * 複数行取得する、かつ、特定の列をkeyとして指定したい場合、{key: 列番}で指定
+ */
+type ItereterTypeConverterConfig<T, P extends keyof T> = T[P] extends Array<infer R>
+  ? { [K in keyof T[P][0]]: number }
+  : { [K in keyof T[P]]: number };
+/**
+ * 繰り返し行を取得したい場合に指定
+ * 特定の行数と列数を指定することや複数指定することで加算した行間を取得できる
+ */
+type ItereterTypeValue = number | Indexes | (number | Indexes)[];
+type ItereterType<T, P extends keyof T> = {
   start: ItereterTypeValue;
   end?: ItereterTypeValue;
+  convert?: ItereterTypeConverterConfig<T, P>;
 };
-type NormarizeFormat = CellIndex | ItereterType;
-export type NormarizeConfig<T> = Record<keyof T, NormarizeFormat>;
+type NormarizeFormat<T, P extends keyof T> = Indexes | ItereterType<T, P>;
+export type NormarizeConfig<T> = { [P in keyof T]: NormarizeFormat<T, P> };
 
-const isCellIndex = (x: unknown): x is CellIndex => Array.isArray(x) && x.length === 2 && all(isNumber, x);
+const isIndexes = (x: unknown): x is Indexes => Array.isArray(x) && x.length === 2 && all(isNumber, x);
 
 /**
  * 設定値のCellIndexを元に分解した行からIndexNumberに変換する
  * @param separatedLines 分解した行
  */
-const indexNumber2CellIndexBySeparatedLines = (separatedLines: string[][]) => (cellIndex: CellIndex): number => {
+const indexNumber2CellIndexBySeparatedLines = (separatedLines: string[][]) => (cellIndex: Indexes): number => {
   const cellValue = path(cellIndex, separatedLines);
   if (!isNumberStr(cellValue)) {
     throw Error('Not Number CellIndex.');
@@ -34,24 +48,37 @@ const getIndexNumber = (separatedLines: string[][], conf: ItereterTypeValue): nu
     return conf;
   }
   const fn = indexNumber2CellIndexBySeparatedLines(separatedLines);
-  if (isCellIndex(conf)) {
+  if (isIndexes(conf)) {
     return fn(conf);
   }
   return reduce((acc, cur) => add(acc, typeof cur === 'number' ? cur : fn(cur)), 0, conf);
 };
 
-const takeCondition = (startIndex: number, endIndex?: number) => (index: number): boolean => {
+const itereterConditionFn = (startIndex: number, endIndex?: number) => (index: number): boolean => {
   return endIndex ? startIndex <= index && index <= endIndex : startIndex <= index;
 };
-const _takeLines = (separatedLines: string[][], startIndex: number, endIndex?: number): unknown[] => {
+
+const _gatLines = (separatedLines: string[][], startIndex: number, endIndex?: number): string[][] => {
   const indexesLines = separatedLines.map((line, index) => ({ line, index }));
-  return filter(pipe(prop('index'), takeCondition(startIndex, endIndex)), indexesLines).map(prop('line'));
+  return filter(pipe(prop('index'), itereterConditionFn(startIndex, endIndex)), indexesLines).map(prop('line'));
 };
-const takeLines = (separatedLines: string[][], config: ItereterType): unknown[] => {
-  const { start, end } = config;
+
+const convertFn = <T, P extends keyof T>(convertConfig: ItereterTypeConverterConfig<T, P>) => (line: string[]) =>
+  reduce(
+    (acc, [key, index]) => assoc(key, path([index], line), acc),
+    {} as { [K in keyof T[P]]: T[P][K] },
+    toPairs<number>(convertConfig),
+  );
+
+const _getDataByLines = <T, P extends keyof T>(separatedLines: string[][], config: ItereterType<T, P>): unknown[] => {
+  const { start, end, convert } = config;
   const startIndex = getIndexNumber(separatedLines, start);
   const endIndex = typeof end === 'undefined' ? end : getIndexNumber(separatedLines, end);
-  return _takeLines(separatedLines, startIndex, endIndex);
+  const lines = _gatLines(separatedLines, startIndex, endIndex);
+  if (typeof convert === 'undefined') {
+    return lines;
+  }
+  return map(convertFn(convert), lines);
 };
 
 /**
@@ -59,12 +86,14 @@ const takeLines = (separatedLines: string[][], config: ItereterType): unknown[] 
  * @param lines 改行コードで行を分解した文字列の配列
  * @param separator 1行をさらに分解する文字列
  */
-const pickDataByLines = (lines: string[], separator: string) => (config: NormarizeFormat) => {
+const getDataByLines = (lines: string[], separator: string) => <T, P extends keyof T>(
+  config: NormarizeFormat<T, P>,
+) => {
   const separatedLines = map(split(separator), lines);
-  if (isCellIndex(config)) {
+  if (isIndexes(config)) {
     return path(config, separatedLines);
   }
-  return takeLines(separatedLines, config);
+  return _getDataByLines(separatedLines, config);
 };
 
 /**
@@ -72,15 +101,12 @@ const pickDataByLines = (lines: string[], separator: string) => (config: Normari
  * @param config 設定
  * @param separator 1行を分解する文字列
  */
-export const normarizeLines = <T>(config: NormarizeConfig<T>, separator: string) => (
-  lines: string[],
-): Record<keyof T, unknown> => {
-  const pickData = pickDataByLines(lines, separator);
-  const pairs = map(([key, conf]) => [key, conf] as [keyof T, NormarizeFormat], toPairs(config));
-  const obj = reduce(
-    (acc, [key, conf]) => ({ ...acc, [key]: pickData(conf) }),
+export const normarizeLines = <T>(config: NormarizeConfig<T>, separator: string) => (lines: string[]): T => {
+  const fn = getDataByLines(lines, separator);
+  const pairs = map((key) => ({ key, conf: config[key] }), keys(config));
+  return reduce(
+    (acc, { key, conf }) => ({ ...acc, [key]: fn(conf) }),
     {} as { [P in keyof T]: T[P] }, //
     pairs,
   );
-  return obj as T;
 };
