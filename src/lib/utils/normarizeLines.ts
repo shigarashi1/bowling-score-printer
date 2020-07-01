@@ -30,12 +30,12 @@ type ItereterType<T, P extends keyof T> = {
 };
 type NormarizeFormat<T, P extends keyof T> = Indexes | ItereterType<T, P>;
 export type NormarizeConfig<T> = { [P in keyof T]: NormarizeFormat<T, P> };
-type NormarizeReturnType<T> = {
+export type NormarizeReturnType<T> = {
   [K in keyof T]: T[K] extends Array<infer R>
     ? R extends Record<string, unknown>
-      ? Array<Record<keyof R, unknown>>
-      : unknown[]
-    : unknown;
+      ? Array<Record<keyof R, string>>
+      : string[]
+    : string;
 };
 
 const isIndexes = (x: unknown): x is Indexes => Array.isArray(x) && x.length === 2 && all(isNumber, x);
@@ -90,7 +90,7 @@ const convertFn = <T, P extends keyof T>(convertConfig: IndexedNumber<T> | numbe
   );
 };
 
-const _getDataByLines = <T, P extends keyof T>(separatedLines: string[][], config: ItereterType<T, P>): unknown[] => {
+const _getDataByLines = <T, P extends keyof T>(separatedLines: string[][], config: ItereterType<T, P>) => {
   const { start, end, convert } = config;
   const startIndex = getIndexNumber(separatedLines, start);
   const endIndex = typeof end === 'undefined' ? end : getIndexNumber(separatedLines, end);
@@ -128,7 +128,7 @@ export const normarizeLines = <T>(config: NormarizeConfig<T>, separator: string)
   const pairs = map((key) => ({ key, conf: config[key] }), keys(config));
   return reduce(
     (acc, { key, conf }) => ({ ...acc, [key]: fn(conf) }),
-    {} as { [P in keyof T]: T[P] }, //
+    {} as NormarizeReturnType<T>, //
     pairs,
-  ) as NormarizeReturnType<T>;
+  );
 };
