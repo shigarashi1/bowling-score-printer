@@ -19,17 +19,18 @@ const TEST_LINES = repeat(inc, 10)
   .map(join(' '));
 
 type TestType = {
-  cellIndex1: unknown;
-  cellIndex2: unknown;
-  itereter1: unknown;
-  itereter2: unknown;
-  itereter3: unknown;
+  cellIndex1: string;
+  cellIndex2: string;
+  itereter1: string;
+  itereter2: string;
+  itereter3: string;
   itereter4: {
-    a: unknown;
-    b: unknown;
-    c: unknown;
-    d: unknown;
+    a: string;
+    b: string;
+    c: string;
+    d: string;
   }[];
+  itereter5: string[];
 };
 const TEST_NORMARIZED_CONFIG: NormarizeConfig<TestType> = {
   cellIndex1: [0, 0],
@@ -60,6 +61,10 @@ const TEST_NORMARIZED_CONFIG: NormarizeConfig<TestType> = {
       d: 3,
     },
   },
+  itereter5: {
+    start: 8,
+    convert: 1,
+  },
 };
 
 const toItereter4 = (values: string[][]) =>
@@ -73,7 +78,7 @@ const toItereter4 = (values: string[][]) =>
         d: path([3], cur),
       },
     ],
-    [] as TestType['itereter4'],
+    [] as unknown[],
     values,
   );
 
@@ -99,6 +104,7 @@ const TEST_EXPECTS: Record<keyof TestType, unknown> = {
     ['9', '10', '11', '12'],
     ['10', '11', '12', '13'],
   ]),
+  itereter5: ['10', '11'],
 };
 
 describe('normarizeLines', () => {

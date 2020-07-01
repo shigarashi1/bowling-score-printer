@@ -1,5 +1,5 @@
 import { toPairs, find, pathEq } from 'ramda';
-import { IndexesObject } from './type';
+import { IndexedObject } from './type';
 import { getOrElse } from './getOrElse';
 import { isEnum } from './typeGuard';
 
@@ -9,7 +9,7 @@ import { isEnum } from './typeGuard';
  * @param toEnum 変換後のenum
  * @param defaultValue 変換後のenumにmatchしない場合に設定する変換後のenum
  */
-export const enum2enum = <T, K>(fromEnum: IndexesObject<T>, toEnum: IndexesObject<K>, defaultValue: K) => (
+export const enum2enum = <T, K>(fromEnum: IndexedObject<T>, toEnum: IndexedObject<K>, defaultValue: K) => (
   value: T,
 ): K => {
   if (isEnum(fromEnum)(value)) {

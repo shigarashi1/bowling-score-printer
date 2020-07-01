@@ -1,20 +1,19 @@
 import { NormarizeConfig, normarizeLines } from '../lib/utils';
+import { TSexInput, TThrowResult } from './type';
 
 type NormarizedData = {
-  numberOfLane: unknown;
-  playedDate: unknown;
-  numberOfPlayer: unknown;
-  numberOfGame: unknown;
+  numberOfLane: number;
+  playedDate: Date;
+  numberOfPlayer: number;
+  numberOfGame: number;
   playerInformations: {
-    name: unknown;
-    hdcp: unknown;
-    age: unknown;
-    sex: unknown;
+    name: string;
+    hdcp: number;
+    age: number;
+    sex: TSexInput;
   }[];
-  gameTimes: {
-    startAt: unknown;
-  }[];
-  playerResults: unknown[];
+  gameStartAtTimes: Date[];
+  playerResults: TThrowResult[][];
 };
 
 const NORMARIZE_CONFIG: NormarizeConfig<NormarizedData> = {
@@ -32,15 +31,13 @@ const NORMARIZE_CONFIG: NormarizeConfig<NormarizedData> = {
       sex: 3,
     },
   },
-  gameTimes: {
+  gameStartAtTimes: {
     start: [1, [0, 2]],
     end: [
       [0, 2],
       [0, 3],
     ],
-    convert: {
-      startAt: 0,
-    },
+    convert: 0,
   },
   playerResults: {
     start: [1, [0, 2], [0, 3]],
