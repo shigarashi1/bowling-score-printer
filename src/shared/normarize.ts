@@ -13,7 +13,7 @@ type NormarizedData = {
     sex: TSexInput;
   }[];
   gameStartAtTimes: Date[];
-  playerResults: TThrowResult[];
+  playerResults: TThrowResult[][];
 };
 
 const NORMARIZE_CONFIG: NormarizeConfig<NormarizedData> = {

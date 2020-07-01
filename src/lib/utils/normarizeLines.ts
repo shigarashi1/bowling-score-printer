@@ -31,7 +31,11 @@ type ItereterType<T, P extends keyof T> = {
 type NormarizeFormat<T, P extends keyof T> = Indexes | ItereterType<T, P>;
 export type NormarizeConfig<T> = { [P in keyof T]: NormarizeFormat<T, P> };
 type NormarizeReturnType<T> = {
-  [K in keyof T]: T[K] extends Array<infer R> ? Array<Record<keyof R, unknown>> : unknown;
+  [K in keyof T]: T[K] extends Array<infer R>
+    ? R extends Record<string, unknown>
+      ? Array<Record<keyof R, unknown>>
+      : unknown[]
+    : unknown;
 };
 
 const isIndexes = (x: unknown): x is Indexes => Array.isArray(x) && x.length === 2 && all(isNumber, x);
