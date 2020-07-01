@@ -1,16 +1,24 @@
 import { isNumber, isNumberStr } from '../utils';
 import { add, path, map, reduce, split, all, pipe, prop, filter, keys, toPairs, assoc } from 'ramda';
+import { getOrElse } from './getOrElse';
+import { NestedType } from './type';
 
 /**
  * 行数と列数を指定して、特定の値を取得
  */
 type Indexes = [number, number];
+type IndexedNumber<T> = { [K in keyof T]: number };
+
 /**
  * 複数行取得する、かつ、特定の列をkeyとして指定したい場合、{key: 列番}で指定
+ * 列の内、１つしか使わない場合は列番で指定できる
  */
 type ItereterTypeConverterConfig<T, P extends keyof T> = T[P] extends Array<infer R>
-  ? { [K in keyof T[P][0]]: number }
-  : { [K in keyof T[P]]: number };
+  ? T[P][0] extends Record<string, unknown>
+    ? IndexedNumber<T[P][0]>
+    : number
+  : never;
+
 /**
  * 繰り返し行を取得したい場合に指定
  * 特定の行数と列数を指定することや複数指定することで加算した行間を取得できる
@@ -26,16 +34,18 @@ export type NormarizeConfig<T> = { [P in keyof T]: NormarizeFormat<T, P> };
 
 const isIndexes = (x: unknown): x is Indexes => Array.isArray(x) && x.length === 2 && all(isNumber, x);
 
+const getPathStr = (paths: number[], obj: string[] | string[][]): string => getOrElse('', path(paths, obj));
+
 /**
  * 設定値のCellIndexを元に分解した行からIndexNumberに変換する
  * @param separatedLines 分解した行
  */
 const indexNumber2CellIndexBySeparatedLines = (separatedLines: string[][]) => (cellIndex: Indexes): number => {
-  const cellValue = path(cellIndex, separatedLines);
-  if (!isNumberStr(cellValue)) {
+  const value = getPathStr(cellIndex, separatedLines);
+  if (!isNumberStr(value)) {
     throw Error('Not Number CellIndex.');
   }
-  return Number(cellValue);
+  return Number(value);
 };
 
 /**
@@ -63,12 +73,16 @@ const _gatLines = (separatedLines: string[][], startIndex: number, endIndex?: nu
   return filter(pipe(prop('index'), itereterConditionFn(startIndex, endIndex)), indexesLines).map(prop('line'));
 };
 
-const convertFn = <T, P extends keyof T>(convertConfig: ItereterTypeConverterConfig<T, P>) => (line: string[]) =>
-  reduce(
-    (acc, [key, index]) => assoc(key, path([index], line), acc),
+const convertFn = <T, P extends keyof T>(convertConfig: IndexedNumber<T> | number) => (line: string[]) => {
+  if (isNumber(convertConfig)) {
+    return getPathStr([convertConfig], line);
+  }
+  return reduce(
+    (acc, [key, index]) => assoc(key, getPathStr([index], line), acc),
     {} as { [K in keyof T[P]]: T[P][K] },
     toPairs<number>(convertConfig),
   );
+};
 
 const _getDataByLines = <T, P extends keyof T>(separatedLines: string[][], config: ItereterType<T, P>): unknown[] => {
   const { start, end, convert } = config;
@@ -91,7 +105,7 @@ const getDataByLines = (lines: string[], separator: string) => <T, P extends key
 ) => {
   const separatedLines = map(split(separator), lines);
   if (isIndexes(config)) {
-    return path(config, separatedLines);
+    return getPathStr(config, separatedLines);
   }
   return _getDataByLines(separatedLines, config);
 };
@@ -101,12 +115,14 @@ const getDataByLines = (lines: string[], separator: string) => <T, P extends key
  * @param config 設定
  * @param separator 1行を分解する文字列
  */
-export const normarizeLines = <T>(config: NormarizeConfig<T>, separator: string) => (lines: string[]): T => {
+export const normarizeLines = <T>(config: NormarizeConfig<T>, separator: string) => (
+  lines: string[],
+): NestedType<T, unknown> => {
   const fn = getDataByLines(lines, separator);
   const pairs = map((key) => ({ key, conf: config[key] }), keys(config));
   return reduce(
     (acc, { key, conf }) => ({ ...acc, [key]: fn(conf) }),
     {} as { [P in keyof T]: T[P] }, //
     pairs,
-  );
+  ) as NestedType<T, unknown>;
 };
