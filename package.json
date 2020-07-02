@@ -12,7 +12,9 @@
     "test:ci": "jest -c ./jest.config.json --ci",
     "test:pre-commit": "jest -c ./jest.config.json --ci --testPathIgnorePatterns=\"/test/\"",
     "test:clearCache": "jest --clearCache",
-    "docgen": "typedoc --options ./typedoc.json"
+    "docgen:typedoc": "typedoc --options ./typedoc.json",
+    "docgen:nojeykll": "nodetouch docs/.nojekyll",
+    "docgen": "npm run docgen:typedoc && npm run docgen:nojeykll"
   },
   "repository": {
     "type": "git",
@@ -57,6 +59,7 @@
     "jest": "26.0.1",
     "lint-staged": "10.2.9",
     "prettier": "2.0.5",
+    "touch": "^3.1.0",
     "ts-jest": "26.1.0",
     "ts-node": "8.10.2",
     "typedoc": "0.17.7",
