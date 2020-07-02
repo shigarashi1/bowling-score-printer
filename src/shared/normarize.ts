@@ -1,5 +1,8 @@
-import { NormarizeConfig, normarizeLines } from '../lib/utils';
+import { NormarizeConfig, normarizeLines, isNumber } from '../lib/utils';
 import { TSexInput, TThrowResult } from './type';
+import { TypeConverterConfig, typeConverter } from '../lib/utils/typeConverter';
+import { pipe, all } from 'ramda';
+import { isKnockedDownPin } from './typeGuard';
 
 type NormarizedData = {
   numberOfLane: number;
@@ -44,4 +47,30 @@ const NORMARIZE_CONFIG: NormarizeConfig<NormarizedData> = {
   },
 };
 
-export const normarize = normarizeLines(NORMARIZE_CONFIG, ' ');
+const TYPE_CONVERTER_CONFIG: TypeConverterConfig<NormarizedData> = {
+  numberOfLane: {
+    validator: isNumber,
+  },
+  playedDate: {
+    validator: isNumber,
+  },
+  numberOfPlayer: {
+    validator: isNumber,
+  },
+  numberOfGame: {
+    validator: isNumber,
+  },
+  playerInformations: {
+    validator: isNumber,
+  },
+  gameStartAtTimes: {
+    validator: isNumber,
+  },
+  playerResults: {
+    validator: all(isKnockedDownPin) as (x: unknown) => boolean,
+  },
+};
+
+const normarize = normarizeLines(NORMARIZE_CONFIG, ' ');
+const converter = typeConverter(TYPE_CONVERTER_CONFIG);
+export const parseInputData = pipe(normarize, converter);
