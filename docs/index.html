@@ -65,6 +65,169 @@
 				<a href="#bowling-score-printer" id="bowling-score-printer" style="color: inherit; text-decoration: none;">
 					<h1>bowling-score-printer</h1>
 				</a>
+				<a href="#overview" id="overview" style="color: inherit; text-decoration: none;">
+					<h1>Overview</h1>
+				</a>
+				<p>ボーリングのスコア表を作成するプログラミング問題とその回答例</p>
+				<a href="#question" id="question" style="color: inherit; text-decoration: none;">
+					<h1>Question</h1>
+				</a>
+				<a href="#期待する出力項目" id="期待する出力項目" style="color: inherit; text-decoration: none;">
+					<h2>期待する出力項目</h2>
+				</a>
+				<ol>
+					<li><p>レーン合計を計算し出力する</p>
+						<ul>
+							<li>ただし、レーンの合計にはHDCPを加味しないこと</li>
+						</ul>
+					</li>
+					<li><p>プレイヤーの名前をゲームの合計スコアの昇順で出力する</p>
+						<ul>
+							<li>プレイヤー名の間は改行で出力すること</li>
+						</ul>
+					</li>
+					<li><p>プレイヤーのゲームの合計スコアと平均スコアを出力する</p>
+					</li>
+					<li><p>プレイヤーのゲームのストライク数、スペア数、ガター数を出力する</p>
+					</li>
+					<li><p>プレイヤー名、ゲーム数、フレーム数、N投目かを指定して、倒したピンの数を出力する</p>
+						<ul>
+							<li>フレームのN投目を投げていない場合、&quot;No Throw&quot;を出力すること</li>
+						</ul>
+					</li>
+					<li><p>プレイヤーごとのスコアシートを作成し、出力する</p>
+						<ul>
+							<li>出力フォーマットは後述する</li>
+						</ul>
+					</li>
+				</ol>
+				<a href="#入力データ仕様" id="入力データ仕様" style="color: inherit; text-decoration: none;">
+					<h2>入力データ仕様</h2>
+				</a>
+				<a href="#入力データサンプル" id="入力データサンプル" style="color: inherit; text-decoration: none;">
+					<h3>入力データサンプル</h3>
+				</a>
+				<pre><code><span class="hljs-number">10</span> <span class="hljs-number">2016</span><span class="hljs-number">-06</span><span class="hljs-number">-26</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span>
+kira <span class="hljs-number">0</span> <span class="hljs-number">31</span> M
+L <span class="hljs-number">30</span> <span class="hljs-number">31</span> M
+<span class="hljs-number">09</span>:<span class="hljs-number">30</span>
+<span class="hljs-number">10</span>:<span class="hljs-number">00</span>
+G <span class="hljs-number">3</span> <span class="hljs-number">6</span> G <span class="hljs-number">9</span> G <span class="hljs-number">7</span> G <span class="hljs-number">8</span> G <span class="hljs-number">3</span> <span class="hljs-number">6</span> <span class="hljs-number">8</span> <span class="hljs-number">2</span> <span class="hljs-number">10</span> <span class="hljs-number">10</span> <span class="hljs-number">9</span> G
+G <span class="hljs-number">3</span> <span class="hljs-number">6</span> G <span class="hljs-number">9</span> G <span class="hljs-number">7</span> G <span class="hljs-number">8</span> G <span class="hljs-number">3</span> <span class="hljs-number">6</span> <span class="hljs-number">8</span> <span class="hljs-number">2</span> <span class="hljs-number">10</span> <span class="hljs-number">10</span> <span class="hljs-number">9</span> G
+G <span class="hljs-number">3</span> <span class="hljs-number">6</span> G <span class="hljs-number">9</span> G <span class="hljs-number">7</span> G <span class="hljs-number">8</span> G <span class="hljs-number">3</span> <span class="hljs-number">6</span> <span class="hljs-number">8</span> <span class="hljs-number">2</span> <span class="hljs-number">10</span> <span class="hljs-number">10</span> <span class="hljs-number">9</span> G
+G <span class="hljs-number">3</span> <span class="hljs-number">6</span> G <span class="hljs-number">9</span> G <span class="hljs-number">7</span> G <span class="hljs-number">8</span> G <span class="hljs-number">3</span> <span class="hljs-number">6</span> <span class="hljs-number">8</span> <span class="hljs-number">2</span> <span class="hljs-number">10</span> <span class="hljs-number">10</span> <span class="hljs-number">9</span> G</code></pre>
+				<a href="#入力データ" id="入力データ" style="color: inherit; text-decoration: none;">
+					<h3>入力データ</h3>
+				</a>
+				<pre><code><span class="hljs-attr">LaneNo</span> <span class="hljs-string">Date Player_N Game_N</span>
+<span class="hljs-attr">Player_1_Name</span> <span class="hljs-string">Player_1_HDCP Player_1_Age Player_1_Sex</span>
+<span class="hljs-attr">Player_2_Name</span> <span class="hljs-string">Player_2_HDCP Player_2_Age Player_2_Sex</span>
+<span class="hljs-attr">・・・</span>
+<span class="hljs-attr">Player_N_Name</span> <span class="hljs-string">Player_N_HDCP Player_N_Age Player_N_Sex</span>
+<span class="hljs-attr">Game_1_StartTime</span>
+<span class="hljs-attr">Game_2_StartTime</span>
+<span class="hljs-attr">・・・</span>
+<span class="hljs-attr">Game_N_StartTime</span>
+<span class="hljs-attr">Player_1_Game_1_Throw_1</span> <span class="hljs-string">Player_1_Game_1_Throw_2 Player_1_Game_1_Throw_3 ・・・ Player_1_Game_1_Throw_N</span>
+<span class="hljs-attr">・・・</span>
+<span class="hljs-attr">Player_1_Game_N_Throw_1</span> <span class="hljs-string">Player_1_Game_N_Throw_2 Player_1_Game_N_Throw_3 ・・・ Player_1_Game_N_Throw_N</span>
+<span class="hljs-attr">・・・</span>
+<span class="hljs-attr">Player_2_Game_1_Throw_1</span> <span class="hljs-string">Player_2_Game_1_Throw_2 Player_2_Game_1_Throw_3 ・・・ Player_1_Game_1_Throw_N</span>
+<span class="hljs-attr">・・・</span>
+<span class="hljs-attr">Player_2_Game_N_Throw_1</span> <span class="hljs-string">Player_2_Game_N_Throw_2 Player_2_Game_N_Throw_3 ・・・ Player_2_Game_N_Throw_N</span>
+<span class="hljs-attr">・・・</span>
+<span class="hljs-attr">Player_N_Game_1_Throw_1</span> <span class="hljs-string">Player_N_Game_1_Throw_2 Player_N_Game_1_Throw_3 ・・・ Player_N_Game_1_Throw_N</span>
+<span class="hljs-attr">・・・</span>
+<span class="hljs-attr">Player_N_Game_N_Throw_1</span> <span class="hljs-string">Player_N_Game_N_Throw_2 Player_N_Game_N_Throw_3 ・・・ Player_N_Game_N_Throw_N</span></code></pre>
+				<a href="#入力データ仕様詳細" id="入力データ仕様詳細" style="color: inherit; text-decoration: none;">
+					<h3>入力データ仕様詳細</h3>
+				</a>
+				<ul>
+					<li>1行目に遊んだレーン数（LaneNo）、日付（Date）、プレイヤー数（Player_N）、ゲーム数（Game_N）の順で半角スペース区切りで与えられる</li>
+					<li>2〜Player_N行目まで、プレイヤー名（Player_N_Name）、HDCP（Player_N_HDCP）、年齢（Player_N_Age）、性別（Player_N_Sex）の順で半角スペース区切りで与えられる</li>
+					<li>Player_N〜Game_N行目まで、開始時間（Game_N_StartTime）の順で半角スペース区切りで与えられる</li>
+					<li>Game_N行目以降はプレイヤーのゲームの投球結果がゲーム数の昇順で行区切りで与えられる</li>
+					<li>プレイヤーの投球結果の行は1投目から順にN投目まで順に半角スペース区切りで与えられる</li>
+					<li>フォーマットは次の通り<ul>
+							<li>日付（Date）は&quot;yyyy-MM-dd&quot;で与えられる</li>
+							<li>開始時間（Game_N_StartTime）は&quot;HH:mm&quot;で与えられる</li>
+							<li>性別（Player_N_Sex）は男性なら&quot;M&quot;、女性なら&quot;W&quot;で与えられる</li>
+							<li>プレイヤーの投球結果はガターは&quot;G&quot;、ファールは&quot;F&quot;、倒したピンの数のいずれかで与えられる</li>
+						</ul>
+					</li>
+				</ul>
+				<a href="#スコアシートの仕様" id="スコアシートの仕様" style="color: inherit; text-decoration: none;">
+					<h2>スコアシートの仕様</h2>
+				</a>
+				<a href="#スコアシートサンプル" id="スコアシートサンプル" style="color: inherit; text-decoration: none;">
+					<h3>スコアシートサンプル</h3>
+				</a>
+				<pre><code>|<span class="hljs-string"> Date            </span>|<span class="hljs-string"> Lane </span>|<span class="hljs-string"> Name   </span>|<span class="hljs-string"> Age </span>|<span class="hljs-string"> Sex             </span>|<span class="hljs-string"> HDCP </span>|<span class="hljs-string"> Total </span>|<span class="hljs-string"> AVG </span>|<span class="hljs-string"> X       </span>|<span class="hljs-string"> /        </span>|
+|<span class="hljs-string">-----------------</span>|<span class="hljs-string">------</span>|<span class="hljs-string">--------</span>|<span class="hljs-string">-----</span>|<span class="hljs-string">-----------------</span>|<span class="hljs-string">------</span>|<span class="hljs-string">-------</span>|<span class="hljs-string">-----</span>|<span class="hljs-string">---------</span>|<span class="hljs-string">----------</span>|
+|<span class="hljs-string"> 2020/06/13 Sat  </span>|<span class="hljs-string"> 15   </span>|<span class="hljs-string"> watabe </span>|<span class="hljs-string"> 40  </span>|<span class="hljs-string"> male(or female) </span>|<span class="hljs-string"> 0    </span>|<span class="hljs-string"> 216   </span>|<span class="hljs-string"> 108 </span>|<span class="hljs-string"> 1(2.5%) </span>|<span class="hljs-string"> 7(17.5%) </span>|
+
+|<span class="hljs-string"> Start </span>|<span class="hljs-string"> Game </span>|<span class="hljs-string"> 1     </span>|<span class="hljs-string"> 2     </span>|<span class="hljs-string"> 3     </span>|<span class="hljs-string"> 4     </span>|<span class="hljs-string"> 5     </span>|<span class="hljs-string"> 6     </span>|<span class="hljs-string"> 7     </span>|<span class="hljs-string"> 8     </span>|<span class="hljs-string"> 9     </span>|<span class="hljs-string"> 10        </span>|<span class="hljs-string"> SUB/T   </span>|<span class="hljs-string"> X </span>|<span class="hljs-string"> / </span>|<span class="hljs-string"> - </span>|
+|<span class="hljs-string">-------</span>|<span class="hljs-string">------</span>|<span class="hljs-string">-------</span>|<span class="hljs-string">-------</span>|<span class="hljs-string">-------</span>|<span class="hljs-string">-------</span>|<span class="hljs-string">-------</span>|<span class="hljs-string">-------</span>|<span class="hljs-string">-------</span>|<span class="hljs-string">-------</span>|<span class="hljs-string">-------</span>|<span class="hljs-string">-----------</span>|<span class="hljs-string">---------</span>|<span class="hljs-string">---</span>|<span class="hljs-string">---</span>|<span class="hljs-string">---</span>|
+|<span class="hljs-string"> 09:38 </span>|<span class="hljs-string"> 1    </span>|<span class="hljs-string"> 7 </span>|<span class="hljs-string"> - </span>|<span class="hljs-string"> 1 </span>|<span class="hljs-string"> 5 </span>|<span class="hljs-string"> 7 </span>|<span class="hljs-string"> - </span>|<span class="hljs-string"> 8 </span>|<span class="hljs-string"> / </span>|<span class="hljs-string"> 5 </span>|<span class="hljs-string"> 3 </span>|<span class="hljs-string"> 7 </span>|<span class="hljs-string"> / </span>|<span class="hljs-string"> X     </span>|<span class="hljs-string"> 6 </span>|<span class="hljs-string"> 3 </span>|<span class="hljs-string"> G </span>|<span class="hljs-string"> 9 </span>|<span class="hljs-string"> F </span>|<span class="hljs-string"> / </span>|<span class="hljs-string"> 1 </span>|<span class="hljs-string"> 117/117 </span>|<span class="hljs-string"> 1 </span>|<span class="hljs-string"> 3 </span>|<span class="hljs-string"> 6 </span>|
+|<span class="hljs-string"> 09:49 </span>|<span class="hljs-string"> 2    </span>|<span class="hljs-string"> G </span>|<span class="hljs-string"> 7 </span>|<span class="hljs-string"> 7 </span>|<span class="hljs-string"> / </span>|<span class="hljs-string"> 3 </span>|<span class="hljs-string"> - </span>|<span class="hljs-string"> 8 </span>|<span class="hljs-string"> 1 </span>|<span class="hljs-string"> 9 </span>|<span class="hljs-string"> / </span>|<span class="hljs-string"> 8 </span>|<span class="hljs-string"> / </span>|<span class="hljs-string"> 7 </span>|<span class="hljs-string"> - </span>|<span class="hljs-string"> 9 </span>|<span class="hljs-string"> - </span>|<span class="hljs-string"> 6 </span>|<span class="hljs-string"> / </span>|<span class="hljs-string"> 4 </span>|<span class="hljs-string"> 4 </span>|<span class="hljs-string">   </span>|<span class="hljs-string"> 105/216 </span>|<span class="hljs-string"> 0 </span>|<span class="hljs-string"> 4 </span>|<span class="hljs-string"> 6 </span>|
+</code></pre>
+				<a href="#スコアシート詳細" id="スコアシート詳細" style="color: inherit; text-decoration: none;">
+					<h3>スコアシート詳細</h3>
+				</a>
+				<ul>
+					<li><p>全体</p>
+						<ul>
+							<li>スコアシートは&quot;サマリーを表示する表&quot;と&quot;ゲームの詳細を表示する表&quot;の2種類からなる</li>
+							<li>列ごとの区切りは&quot;|&quot;をつける</li>
+							<li>列ごとの区切りと見出し行、データの間は必ず1つ以上の半角スペースをつける</li>
+							<li>各列の幅はその列の中で最も長さの大きい見出し・データが上記の形で収まる最小の幅とする</li>
+							<li>文字列、数値に関わらず、データは左寄せとする</li>
+							<li>区切り行は&quot;|&quot;を除き、ハイフンで埋める</li>
+						</ul>
+					</li>
+					<li><p>&quot;サマリーを表示する表&quot;</p>
+						<ul>
+							<li>&quot;Date&quot;は&quot;yyyy/MM/dd eee&quot;のフォーマットで出力する</li>
+							<li>&quot;Lane&quot;は遊んだレーン数を出力する</li>
+							<li>&quot;Name&quot;は出力対象となったプレイヤー名を出力する</li>
+							<li>&quot;Age&quot;はプレイヤーの年齢を出力する</li>
+							<li>&quot;Sex&quot;は男性ならmale、女性ならfemaleのフォーマットで出力する</li>
+							<li>&quot;HDCP&quot;はプレイヤーのハンディキャップを出力する</li>
+							<li>&quot;Total&quot;は全ゲームの合計スコアを出力する</li>
+							<li>&quot;AVG&quot;は1ゲームの平均スコアを出力する</li>
+							<li>&quot;X&quot;、&quot;/&quot;は全ゲームのストライク及びスペアの合計と全ゲームの投球数で割った平均を出力する</li>
+							<li>&quot;X&quot;、&quot;/&quot;は次のフォーマットで出力する（合計数/投球数で割った平均 + %）</li>
+							<li>&quot;AVG&quot;, &quot;X&quot;, &quot;/&quot;で小数点以下が発生する場合、小数点以下第2位を切り捨て出力する</li>
+						</ul>
+					</li>
+					<li><p>&quot;ゲームの詳細を表示する表&quot;</p>
+						<ul>
+							<li>1行に１ゲームごとのスコアを出力する</li>
+							<li>&quot;Start&quot;は&quot;HH:mm&quot;のフォーマットで開始時間を出力する</li>
+							<li>それぞれのフレームはストライクは”X”、スペアは&quot;/&quot;、1投目のガターは&quot;G&quot;、2投目以降のガターは&quot;-&quot;、ファールは&quot;F&quot;、上記以外は倒したピンの数を出力する</li>
+							<li>ただし、第10フレームの3投目がない場合は&quot; &quot;（半角スペース）を出力する</li>
+							<li>ストライクの場合、1投目と2投目を区切る&quot;|&quot;を付けない（ただし、第10フレームを除く）</li>
+							<li>&quot;SUB/T&quot;にはゲームの合計スコアとそれまでのゲームをした値を/区切りで出力する</li>
+							<li>&quot;X&quot;、&quot;/&quot;、”-”にはそれぞれゲームのストライク、スペア、ガター(G or -)の合計数を出力する</li>
+						</ul>
+					</li>
+				</ul>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h2>Install</h2>
+				</a>
+				<ol>
+					<li><p>node.jsのVer.12.18.0が動くPCを用意してください.</p>
+					</li>
+					<li><p>このレポジトリを<code>git clone</code>して、<code>npm install</code>を行ってください.</p>
+					</li>
+					<li><p>コマンドコンソールにて<code>npm start</code>を実行し、<code>hallo world</code>と表示されれば、準備は完了です.</p>
+					</li>
+				</ol>
+				<a href="#run-test" id="run-test" style="color: inherit; text-decoration: none;">
+					<h2>Run Test</h2>
+				</a>
+				<p>コマンドコンソールにて、<code>npm run test</code>を実行するとテストが実行されます.</p>
+				<p><a href="./src/test">テスト用のテキストファイルとソースコード</a></p>
 				<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
 					<h2>API Documentation</h2>
 				</a>
@@ -81,23 +244,233 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#extendscore" class="tsd-kind-icon">Extend<wbr>Score</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#indexednumber" class="tsd-kind-icon">Indexed<wbr>Number</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#indexedobject" class="tsd-kind-icon">Indexed<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#indexes" class="tsd-kind-icon">Indexes</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#iteretertype" class="tsd-kind-icon">Itereter<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#iteretertypeconverterconfig" class="tsd-kind-icon">Itereter<wbr>Type<wbr>Converter<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#iteretertypevalue" class="tsd-kind-icon">Itereter<wbr>Type<wbr>Value</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#nestedtype" class="tsd-kind-icon">Nested<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#normarizeconfig" class="tsd-kind-icon">Normarize<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#normarizeformat" class="tsd-kind-icon">Normarize<wbr>Format</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#normarizereturntype" class="tsd-kind-icon">Normarize<wbr>Return<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#normarizeddata" class="tsd-kind-icon">Normarized<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#options" class="tsd-kind-icon">Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#params" class="tsd-kind-icon">Params</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#path" class="tsd-kind-icon">Path</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tbasicframe" class="tsd-kind-icon">TBasic<wbr>Frame</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tframe" class="tsd-kind-icon">TFrame</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tframenumber" class="tsd-kind-icon">TFrame<wbr>Number</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tgame" class="tsd-kind-icon">TGame</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tknockeddownpin" class="tsd-kind-icon">TKnocked<wbr>Down<wbr>Pin</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tlane" class="tsd-kind-icon">TLane</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tlastframe" class="tsd-kind-icon">TLast<wbr>Frame</a>
+					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#tloglevel" class="tsd-kind-icon">TLog<wbr>Level</a>
 					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tplayer" class="tsd-kind-icon">TPlayer</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tscoremark" class="tsd-kind-icon">TScore<wbr>Mark</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tsex" class="tsd-kind-icon">TSex</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tsexinput" class="tsd-kind-icon">TSex<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tthrowresult" class="tsd-kind-icon">TThrow<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tthrowresult1st" class="tsd-kind-icon">TThrow<wbr>Result1st</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tthrowresult2nd" class="tsd-kind-icon">TThrow<wbr>Result2nd</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tthrowresult3rd" class="tsd-kind-icon">TThrow<wbr>Result3rd</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#console" class="tsd-kind-icon">Console</a>
+					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#eloglevel" class="tsd-kind-icon">ELog<wbr>Level</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#escoremark" class="tsd-kind-icon">EScore<wbr>Mark</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#esex" class="tsd-kind-icon">ESex</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#esexinput" class="tsd-kind-icon">ESex<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#computeallframescore" class="tsd-kind-icon">compute<wbr>All<wbr>Frame<wbr>Score</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#computegamescore" class="tsd-kind-icon">compute<wbr>Game<wbr>Score</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#computeplayertotalscore" class="tsd-kind-icon">compute<wbr>Player<wbr>Total<wbr>Score</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#isspare" class="tsd-kind-icon">is<wbr>Spare</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#normarize" class="tsd-kind-icon">normarize</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#__formatlogmessage" class="tsd-kind-icon">__format<wbr>Log<wbr>Message</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#getconsole" class="tsd-kind-icon">get<wbr>Console</a>
+						<a href="globals.html#calcbasicframescore" class="tsd-kind-icon">calc<wbr>Basic<wbr>Frame<wbr>Score</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#calcframescore" class="tsd-kind-icon">calc<wbr>Frame<wbr>Score</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#calclastframescore" class="tsd-kind-icon">calc<wbr>Last<wbr>Frame<wbr>Score</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#convertfn" class="tsd-kind-icon">convert<wbr>Fn</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#countpin2throwresult" class="tsd-kind-icon">count<wbr>Pin2<wbr>Throw<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#countpinnext1throwresult" class="tsd-kind-icon">count<wbr>Pin<wbr>Next1<wbr>Throw<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#countpinnext2throwresult" class="tsd-kind-icon">count<wbr>Pin<wbr>Next2<wbr>Throw<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#countpinthrowresult" class="tsd-kind-icon">count<wbr>Pin<wbr>Throw<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#enum2enum" class="tsd-kind-icon">enum2enum</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getdatabylines" class="tsd-kind-icon">get<wbr>Data<wbr>ByLines</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getindexnumber" class="tsd-kind-icon">get<wbr>Index<wbr>Number</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getitereterlines" class="tsd-kind-icon">get<wbr>Itereter<wbr>Lines</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#getorelse" class="tsd-kind-icon">get<wbr>OrElse</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getpathstr" class="tsd-kind-icon">get<wbr>Path<wbr>Str</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#gettimestamp" class="tsd-kind-icon">get<wbr>Time<wbr>Stamp</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#indexnumber2cellindexbyseparatedlines" class="tsd-kind-icon">index<wbr>Number2<wbr>Cell<wbr>Index<wbr>BySeparated<wbr>Lines</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#isenum" class="tsd-kind-icon">is<wbr>Enum</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isindexes" class="tsd-kind-icon">is<wbr>Indexes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isknockeddownpin" class="tsd-kind-icon">is<wbr>Knocked<wbr>Down<wbr>Pin</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#islastframe" class="tsd-kind-icon">is<wbr>Last<wbr>Frame</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isnumber" class="tsd-kind-icon">is<wbr>Number</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isnumberstr" class="tsd-kind-icon">is<wbr>Number<wbr>Str</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#issexinputtype" class="tsd-kind-icon">is<wbr>Sex<wbr>Input<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isstrike" class="tsd-kind-icon">is<wbr>Strike</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#iszeroknockeddownpin" class="tsd-kind-icon">is<wbr>Zero<wbr>Knocked<wbr>Down<wbr>Pin</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#itereterconditionfn" class="tsd-kind-icon">itereter<wbr>Condition<wbr>Fn</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#logger" class="tsd-kind-icon">logger</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#mathfloor" class="tsd-kind-icon">math<wbr>Floor</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#normarizelines" class="tsd-kind-icon">normarize<wbr>Lines</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#readtextfile" class="tsd-kind-icon">read<wbr>Text<wbr>File</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#sortbynumberasc" class="tsd-kind-icon">sort<wbr>ByNumber<wbr>Asc</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#sortbynumberdesc" class="tsd-kind-icon">sort<wbr>ByNumber<wbr>Desc</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#normarize_config" class="tsd-kind-icon">NORMARIZE_<wbr>CONFIG</a>
 					</li>
 				</ul>
 			</nav>
