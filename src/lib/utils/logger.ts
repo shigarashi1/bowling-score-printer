@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { format } from 'date-fns/fp';
 
 export const ELogLevel = {
@@ -14,24 +15,13 @@ const getTimeStamp = () => format('yyyy-MM-dd HH:mm:ss.SSS', new Date());
 export const __formatLogMessage = (logLevel: TLogLevel, message: string): string =>
   `[${logLevel}] ${getTimeStamp()}: ${message}`;
 
-/* eslint-disable no-console */
-// eslint-disable-next-line complexity
-const getConsole = (logLevel: TLogLevel) => {
-  switch (logLevel) {
-    case ELogLevel.error:
-      return console.error;
-    case ELogLevel.warn:
-      return console.warn;
-    case ELogLevel.info:
-      return console.info;
-    case ELogLevel.log:
-      return console.log;
-    default:
-      return console.debug;
-  }
-};
+const Console = {
+  [ELogLevel.error]: console.error,
+  [ELogLevel.warn]: console.warn,
+  [ELogLevel.info]: console.info,
+  [ELogLevel.log]: console.log,
+  [ELogLevel.debug]: console.debug,
+} as const;
 
-export const logger = (logLevel: TLogLevel, message: string, ...optionalParams: any[]): void => {
-  const _console = getConsole(logLevel);
-  _console(__formatLogMessage(logLevel, message), ...optionalParams);
-};
+export const logger = (logLevel: TLogLevel, message: string, ...optionalParams: any[]): void =>
+  Console[logLevel](__formatLogMessage(logLevel, message), ...optionalParams);

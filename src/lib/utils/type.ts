@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-export type IndexedObject<T = any> = { [key: string]: T };
+export type IndexedObject<T> = { [key: string]: T };
 export type NestedType<T, U> = {
   [K in keyof T]: T[K] extends Array<infer R>
     ? Array<NestedType<R, U>>
