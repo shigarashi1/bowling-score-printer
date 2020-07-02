@@ -38,8 +38,17 @@ export type NormarizeReturnType<T> = {
     : string;
 };
 
+/**
+ * indexes型か？
+ * @param x 型検定したい
+ */
 const isIndexes = (x: unknown): x is Indexes => Array.isArray(x) && x.length === 2 && all(isNumber, x);
 
+/**
+ * 配列から文字列を取得する（合致しない場合、空文字を返却する）
+ * @param paths 配列のindexを指定
+ * @param obj 配列
+ */
 const getPathStr = (paths: number[], obj: string[] | string[][]): string => getOrElse('', path(paths, obj));
 
 /**
@@ -74,11 +83,21 @@ const itereterConditionFn = (startIndex: number, endIndex?: number) => (index: n
   return endIndex ? startIndex <= index && index <= endIndex : startIndex <= index;
 };
 
-const _gatLines = (separatedLines: string[][], startIndex: number, endIndex?: number): string[][] => {
+/**
+ * 繰り返し行を取得する
+ * @param separatedLines 改行コードで行を分解したものを更に分解した配列
+ * @param startIndex 開始行
+ * @param endIndex 終了行
+ */
+const getItereterLines = (separatedLines: string[][], startIndex: number, endIndex?: number): string[][] => {
   const indexesLines = separatedLines.map((line, index) => ({ line, index }));
   return filter(pipe(prop('index'), itereterConditionFn(startIndex, endIndex)), indexesLines).map(prop('line'));
 };
 
+/**
+ * convertのpropに条件に従い、objectや配列に変換して返却する
+ * @param convertConfig convert条件
+ */
 const convertFn = <T, P extends keyof T>(convertConfig: IndexedNumber<T> | number) => (line: string[]) => {
   if (isNumber(convertConfig)) {
     return getPathStr([convertConfig], line);
@@ -88,17 +107,6 @@ const convertFn = <T, P extends keyof T>(convertConfig: IndexedNumber<T> | numbe
     {} as { [K in keyof T[P]]: string },
     toPairs<number>(convertConfig),
   );
-};
-
-const _getDataByLines = <T, P extends keyof T>(separatedLines: string[][], config: ItereterType<T, P>) => {
-  const { start, end, convert } = config;
-  const startIndex = getIndexNumber(separatedLines, start);
-  const endIndex = typeof end === 'undefined' ? end : getIndexNumber(separatedLines, end);
-  const lines = _gatLines(separatedLines, startIndex, endIndex);
-  if (typeof convert === 'undefined') {
-    return lines;
-  }
-  return map(convertFn(convert), lines);
 };
 
 /**
@@ -113,7 +121,14 @@ const getDataByLines = (lines: string[], separator: string) => <T, P extends key
   if (isIndexes(config)) {
     return getPathStr(config, separatedLines);
   }
-  return _getDataByLines(separatedLines, config);
+  const { start, end, convert } = config;
+  const startIndex = getIndexNumber(separatedLines, start);
+  const endIndex = typeof end === 'undefined' ? end : getIndexNumber(separatedLines, end);
+  const itereterLines = getItereterLines(separatedLines, startIndex, endIndex);
+  if (typeof convert === 'undefined') {
+    return itereterLines;
+  }
+  return map(convertFn(convert), itereterLines);
 };
 
 /**
