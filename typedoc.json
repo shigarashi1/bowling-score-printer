@@ -1,6 +1,6 @@
 {
   "inputFiles": ["src/**/**.ts"],
-  "mode": "file",
+  "mode": "modules",
   "out": "docs",
   "exclude": "**/*+(index|.spec|.test).ts",
   "excludeNotExported": true
