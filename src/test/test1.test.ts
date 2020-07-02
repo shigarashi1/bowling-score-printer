@@ -3,7 +3,7 @@ import { split, pipe, join } from 'ramda';
 import { readTextFile } from '../lib/utils';
 import { normarize } from '../shared/normarize';
 
-const LINES = readTextFile('src/test/test1.txt', 'utf8');
+const LINES = readTextFile('\n')('src/test/test1.txt', 'utf8');
 const NORMARIZED_DATA = normarize(LINES);
 
 const TEST_CASE_NAME = 'テストケース1';

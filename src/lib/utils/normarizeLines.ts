@@ -85,7 +85,7 @@ const convertFn = <T, P extends keyof T>(convertConfig: IndexedNumber<T> | numbe
   }
   return reduce(
     (acc, [key, index]) => assoc(key, getPathStr([index], line), acc),
-    {} as { [K in keyof T[P]]: T[P][K] },
+    {} as { [K in keyof T[P]]: string },
     toPairs<number>(convertConfig),
   );
 };
